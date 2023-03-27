@@ -2,20 +2,25 @@ UNAME := $(shell uname -m)
 GCCVER ?= 12.2.0
 COMPROOT ?= /home/sw/thirdparty/gcc/gcc-$(GCCVER)/Linux_$(UNAME)
 AS := $(COMPROOT)/bin/gcc
-# ASFLAGS := -nostdlib
+ASFLAGS := -Iinc
 CCNAME := gcc
 CC := $(COMPROOT)/bin/$(CCNAME)
+CFLAGS := -Iinc
 SRC := main.s
-BIN := main
+BIN := main.exe
 
 .PHONY: all ref clean
 
 all: ref main.s
 	$(AS) $(SRC) $(ASFLAGS) -o $(BIN)
-	./$(BIN)
+
+run:
+	./$(BIN) || true
+	$(MAKE) -C ./ref run
 
 ref:
 	$(MAKE) -C ./ref CC=$(CC) AS=$(AS)
 
 clean:
+	test -n "$(ls *.exe)" && rm *.exe || true
 	$(MAKE) -C ./ref clean
