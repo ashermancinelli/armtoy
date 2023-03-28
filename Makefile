@@ -1,6 +1,8 @@
 UNAME := $(shell uname -m)
 GCCVER ?= 12.2.0
-COMPROOT ?= /home/sw/thirdparty/gcc/gcc-$(GCCVER)/Linux_$(UNAME)
+
+COMPROOT ?= /usr
+
 AS := $(COMPROOT)/bin/gcc
 ASFLAGS := -Iinc
 CCNAME := gcc
