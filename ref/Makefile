@@ -1,5 +1,5 @@
-TARGETS := syscall.exe rodata.exe write.exe
-.PHONY: all syscall.exe rodata.exe write.exe
+TARGETS := syscall.exe rodata.exe write.exe loop.exe
+.PHONY: all syscall.exe rodata.exe write.exe loop.exe
 
 all: $(TARGETS)
 
@@ -8,16 +8,19 @@ run:
 	./syscall.exe || true
 	./rodata.exe || true
 
+loop.exe: loop.s
+	$(AS) $^ -o $@ $(CFLAGS)
+
 write.exe: write.s
-	$(AS) $^ -o $@
+	$(AS) $^ -o $@ $(CFLAGS)
 
 syscall.exe: syscall.c
-	$(CC) -S $^
-	$(CC) $^ -o $@
+	$(CC) -S $^ $(CFLAGS)
+	$(CC) $^ -o $@ $(CFLAGS)
 
 rodata.exe: rodata.c
-	$(CC) -S $^
-	$(CC) $^ -o $@
+	$(CC) -S $^ $(CFLAGS)
+	$(CC) $^ -o $@ $(CFLAGS)
 
 clean:
 	test -n "$(ls *.exe)" && rm *.exe || true

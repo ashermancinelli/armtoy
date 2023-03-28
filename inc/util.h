@@ -8,8 +8,12 @@
 
 .macro STDOUT BUF:req,CNT:req
   mov x8, #0x40
-  mov x2, #\CNT
-  mov x1, #\BUF
-  mov x0, #1
+  mov x2, \CNT
+  mov x1, \BUF
+  mov x0, #0x1
   svc #0
+.endm
+
+.macro WRITEINT I:req
+  STDOUT \I, 1
 .endm

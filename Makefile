@@ -5,7 +5,7 @@ AS := $(COMPROOT)/bin/gcc
 ASFLAGS := -Iinc
 CCNAME := gcc
 CC := $(COMPROOT)/bin/$(CCNAME)
-CFLAGS := -Iinc
+CFLAGS := -I$(shell pwd)/inc -g
 SRC := main.s
 BIN := main.exe
 
@@ -19,7 +19,7 @@ run:
 	$(MAKE) -C ./ref run
 
 ref:
-	$(MAKE) -C ./ref CC=$(CC) AS=$(AS)
+	$(MAKE) -C ./ref CC="$(CC)" AS="$(AS)" CFLAGS="$(CFLAGS)"
 
 clean:
 	test -n "$(ls *.exe)" && rm *.exe || true
